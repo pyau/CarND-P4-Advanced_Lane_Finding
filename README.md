@@ -133,7 +133,7 @@ Here's a [link to my video result](./output_tracked.mp4)
 Or this can be watched in youtube link below:
 https://youtu.be/-2jq3KAwORU
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=-2jq3KAwORU
-" target="_blank"><img src="https://raw.githubusercontent.com/pyau/CarND-Advanced-Lane_lines/master/video_screenshot.png" 
+" target="_blank"><img src="https://github.com/pyau/CarND-P4-Advanced_Lane_Finding/blob/master/video_screenshot.png?raw=true" 
 alt="Click to watch video" width="480" height="360" border="10" /></a>
 
 
