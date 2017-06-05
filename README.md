@@ -104,9 +104,9 @@ I verified that my perspective transform was working as expected by drawing the 
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-The code for sliding window to find lane line is found in the file tracker.py. In the `find_window_centroids()` function, we first found the window location where the convolution signal is the highest for left and right lane (line 22-25) for the bottom of the screen. Then for each vertical section (line 29), we find the window (within range controlled by the variable `margin`) in which the convolved signal is the strongest, and add that as centroid.
+The code for sliding window to find lane line is found in the file `tracker.py`. In the `find_window_centroids()` function, we first found the window location where the convolution signal is the highest for left and right lane (line 25-28) for the bottom of the screen. Then for each vertical section (line 43), we find the window (within range controlled by the variable `margin`) in which the convolved signal is the strongest, and add that as centroid.
 
-I added one improvement that should improve segmented lane lines that are farther apart from each other.  If the convolved signal is very low, then I just use the previous centroid value as the new vertical section's centroid (line 37-38 for left lane, 45-46 for right lane).  This is equalivent to assuming ver low signal (no lane pixel found) as straight line.  This at least prevents the algorithm from incorrectly guessing left or right.
+I added one improvement that should improve segmented lane lines that are farther apart from each other.  If the convolved signal is very low, then I just use the previous centroid value as the new vertical section's centroid (line 37-38 for left lane, 45-46 for right lane) in `tracker.py`.  This is equalivent to assuming ver low signal (no lane pixel found) as straight line.  This at least prevents the algorithm from incorrectly guessing left or right.
 
 The results are then drawn in `lane_finding.py` lines 86-100.  Then the code to fit positions with a polynomial is found in `lane_finding.py` lines 102-127.  The below image shows a very smooth polynomial fit to the lane line turning right.
 
@@ -132,7 +132,7 @@ Here's a [link to my video result](./output_tracked.mp4)
 
 Or this can be watched in youtube link below:
 https://youtu.be/-2jq3KAwORU
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=-2jq3KAwORU
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=blYe98LXVtU
 " target="_blank"><img src="https://github.com/pyau/CarND-P4-Advanced_Lane_Finding/blob/master/video_screenshot.png?raw=true" 
 alt="Click to watch video" width="480" height="360" border="10" /></a>
 
@@ -141,6 +141,8 @@ alt="Click to watch video" width="480" height="360" border="10" /></a>
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-The pipeline works reasonaly well for the project_video.mp4.  With more averaging applied, then the result should be smooth.
+The pipeline works reasonaly well for the project_video.mp4.  With more averaging applied, then the result should be smooth.  I had some problem with the algorithm suddenly detected the side of the road as lane line for a few frames. So I add code in `tracker.py` lines 30-38 to make sure the lane line starts at approximately the same location in the frame.
 
-In the harder challenging video, some frames do not have both lane lines captured at all. This pipeline will fail.
+I ran my pipeline against the challenge video and the result was not satisfactory (polyfit does not yield good result, the lane will be interpreted as turning left as the frame is turning right, etc). I believe this can be fixed by experimenting different threshold functions.  The algorithm might have mistaken the shadow as part of the lane line, especially when the shadow and the lane line are close together.
+
+In the harder challenging video, some frames do not have both lane lines captured at all. This pipeline should fail altogether.  Also, the vehicle is driving at a much slower speed. So values that are dependent on speed input should be dynamic (which the in vehicle system should have no problem obtain from CAN message, etc).  An example of this value would be meter per pixel in the y direction.

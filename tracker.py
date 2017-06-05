@@ -29,12 +29,12 @@ class tracker():
 
         if tracker.prev_l_center == 0:
             tracker.prev_l_center = l_center    # if first frame assign to class variable
-        elif abs(tracker.prev_l_center - l_center) > self.margin:
+        elif abs(tracker.prev_l_center - l_center) > self.margin*2:
             l_center = tracker.prev_l_center    # if center is too far away from prev center, assign it to prev center
 
         if tracker.prev_r_center == 0:
             tracker.prev_r_center = r_center    # if first frame assign to class variable
-        elif abs(tracker.prev_r_center - r_center) > self.margin:
+        elif abs(tracker.prev_r_center - r_center) > self.margin*2:
             r_center = tracker.prev_r_center    # if center is too far away from prev center, assign it to prev center
 
         #print( " ")
