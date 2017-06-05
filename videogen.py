@@ -82,7 +82,7 @@ def process_image(img):
     #    plt.plot(histogram)
     window_width = 35
     window_height = 80
-    curve_centers = tracker(Mywindow_width=window_width, Mywindow_height=window_height, Mymargin=35, My_ym = 10/720,
+    curve_centers = tracker(Mywindow_width=window_width, Mywindow_height=window_height, Mymargin=35, My_ym = 30/720,
                             My_xm=4/384, Mysmooth_factor = 15)
 
     window_centroids=curve_centers.find_window_centroids(warped)

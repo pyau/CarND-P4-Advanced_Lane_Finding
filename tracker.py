@@ -2,6 +2,9 @@ import numpy as np
 import cv2
 
 class tracker():
+    prev_l_center = 0
+    prev_r_center = 0
+
     def __init__(self, Mywindow_width, Mywindow_height, Mymargin, My_ym =1, My_xm = 1, Mysmooth_factor=15):
         self.recent_centers = []
         self.window_width = Mywindow_width
@@ -23,6 +26,17 @@ class tracker():
         l_center = np.argmax(np.convolve(window, l_sum)) - window_width / 2
         r_sum = np.sum(warped[int(3*warped.shape[0]/4):,int(warped.shape[1]/2):], axis=0)
         r_center = np.argmax(np.convolve(window, r_sum)) - window_width / 2 + int(warped.shape[1]/2)
+
+        if tracker.prev_l_center == 0:
+            tracker.prev_l_center = l_center    # if first frame assign to class variable
+        elif abs(tracker.prev_l_center - l_center) > self.margin:
+            l_center = tracker.prev_l_center    # if center is too far away from prev center, assign it to prev center
+
+        if tracker.prev_r_center == 0:
+            tracker.prev_r_center = r_center    # if first frame assign to class variable
+        elif abs(tracker.prev_r_center - r_center) > self.margin:
+            r_center = tracker.prev_r_center    # if center is too far away from prev center, assign it to prev center
+
         #print( " ")
         window_centroids.append((l_center, r_center))
         signal_threshold = 10000.0

@@ -142,3 +142,5 @@ alt="Click to watch video" width="480" height="360" border="10" /></a>
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 The pipeline works reasonaly well for the project_video.mp4.  With more averaging applied, then the result should be smooth.
+
+In the harder challenging video, some frames do not have both lane lines captured at all. This pipeline will fail.
